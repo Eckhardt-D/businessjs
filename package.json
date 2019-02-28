@@ -1,0 +1,22 @@
+{
+  "name": "businessjs",
+  "version": "1.0.0",
+  "description": "Fast and accurate business and financial calculations in JavaScript.",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "finance",
+    "business",
+    "accounting",
+    "time value of mmoney"
+  ],
+  "author": "Eckhardt-D",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.0.2",
+    "parcel-bundler": "^1.11.0"
+  }
+}
