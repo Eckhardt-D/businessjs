@@ -105,3 +105,7 @@ function round(number, decimals) {
 }
 
 module.exports = new Fin();
+
+if (typeof window !== 'undefined') {
+  window.businessJS = new Fin();
+}
