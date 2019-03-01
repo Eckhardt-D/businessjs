@@ -5,8 +5,8 @@
   "main": "build/index.js",
   "scripts": {
     "test": "mocha",
-    "build": "npm test && parcel index.js -d build",
-    "pre-commit": "npm run build"
+    "build": "npm test && parcel build index.js -d build",
+    "prepublish": "npm run build"
   },
   "keywords": [
     "finance",
@@ -25,9 +25,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Eckhardt-D/businessjs.git"
-  },
-  "pre-commit": [
-    "test",
-    "build"
-  ]
+  }
 }
