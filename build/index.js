@@ -104,8 +104,8 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   // Override the current require with this new one
   return newRequire;
-})({"src/main.js":[function(require,module,exports) {
-var Fin = function Fin() {};
+})({"src/tvm.js":[function(require,module,exports) {
+var TVM = function TVM() {};
 /**
  * Returns the future value of a compounding or simple amount
  * @param {Number} presentValue The present value of the amount
@@ -115,7 +115,7 @@ var Fin = function Fin() {};
  */
 
 
-Fin.prototype.futureValue = function (presentValue, interest) {
+TVM.prototype.futureValue = function (presentValue, interest) {
   var numPeriods = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   var perPeriod = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
   return round(presentValue * Math.pow(1 + interest / perPeriod, numPeriods * perPeriod), 2);
@@ -129,7 +129,7 @@ Fin.prototype.futureValue = function (presentValue, interest) {
  */
 
 
-Fin.prototype.presentValue = function (futureValue, interest) {
+TVM.prototype.presentValue = function (futureValue, interest) {
   var numPeriods = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   var perPeriod = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
   return round(futureValue / Math.pow(1 + interest / perPeriod, numPeriods * perPeriod), 2);
@@ -143,7 +143,7 @@ Fin.prototype.presentValue = function (futureValue, interest) {
  */
 
 
-Fin.prototype.numPeriods = function (presentValue, futureValue, interest) {
+TVM.prototype.numPeriods = function (presentValue, futureValue, interest) {
   var perPeriod = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
   return round((Math.log(futureValue) - Math.log(presentValue)) / Math.log(1 + interest / perPeriod), 4);
 };
@@ -156,7 +156,7 @@ Fin.prototype.numPeriods = function (presentValue, futureValue, interest) {
  */
 
 
-Fin.prototype.interest = function (presentValue, futureValue) {
+TVM.prototype.interest = function (presentValue, futureValue) {
   var numPeriods = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   var perPeriod = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
   return round(Math.pow(futureValue / presentValue, 1 / (numPeriods * perPeriod)) - 1, 6);
@@ -170,7 +170,7 @@ Fin.prototype.interest = function (presentValue, futureValue) {
  */
 
 
-Fin.prototype.futureValueAnnuityDue = function (payment, interest) {
+TVM.prototype.futureValueAnnuityDue = function (payment, interest) {
   var numPeriods = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   var perPeriod = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
   return round(payment * ((Math.pow(1 + interest, numPeriods * perPeriod + 1) - 1) / (interest / perPeriod) - 1), 2);
@@ -183,7 +183,7 @@ Fin.prototype.futureValueAnnuityDue = function (payment, interest) {
  */
 
 
-Fin.prototype.futureValueAnnuityAdvance = function (payment, interest) {
+TVM.prototype.futureValueAnnuityAdvance = function (payment, interest) {
   var numPeriods = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   var perPeriod = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
   return round(payment * ((Math.pow(1 + interest / perPeriod, numPeriods * perPeriod) - 1) / (interest / perPeriod)), 2);
@@ -197,7 +197,7 @@ Fin.prototype.futureValueAnnuityAdvance = function (payment, interest) {
  */
 
 
-Fin.prototype.presentValueAnnuityDue = function (payment, interest) {
+TVM.prototype.presentValueAnnuityDue = function (payment, interest) {
   var numPeriods = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   var perPeriod = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
   var newInterest = interest / perPeriod;
@@ -214,7 +214,7 @@ Fin.prototype.presentValueAnnuityDue = function (payment, interest) {
  */
 
 
-Fin.prototype.presentValueAnnuityAdvance = function (payment, interest) {
+TVM.prototype.presentValueAnnuityAdvance = function (payment, interest) {
   var numPeriods = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
   var perPeriod = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 1;
   return round(payment * (1 - 1 / Math.pow(1 + interest / perPeriod, numPeriods * perPeriod)) / (interest / perPeriod), 2);
@@ -226,7 +226,7 @@ Fin.prototype.presentValueAnnuityAdvance = function (payment, interest) {
  */
 
 
-Fin.prototype.effectiveRate = function (nominalRate, perPeriod) {
+TVM.prototype.effectiveRate = function (nominalRate, perPeriod) {
   return Math.pow(1 + nominalRate / perPeriod, perPeriod) - 1;
 };
 
@@ -235,15 +235,22 @@ function round(number, decimals) {
   return Math.round((number + 0.00001) * amount) / amount;
 }
 
-module.exports = new Fin();
+module.exports = new TVM();
+},{}],"src/main.js":[function(require,module,exports) {
+var tvm = require('./tvm');
+
+var businessjs = {
+  tvm: tvm
+};
+module.exports = businessjs;
+},{"./tvm":"src/tvm.js"}],"index.js":[function(require,module,exports) {
+var businessjs = require('./src/main');
+
+module.exports = businessjs;
 
 if (typeof window !== 'undefined') {
-  window.businessJS = new Fin();
+  window.businessjs = businessjs;
 }
-},{}],"index.js":[function(require,module,exports) {
-var fin = require('./src/main');
-
-module.exports = fin;
 },{"./src/main":"src/main.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -271,7 +278,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "41931" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "38237" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
