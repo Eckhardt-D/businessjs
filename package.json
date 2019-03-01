@@ -5,8 +5,8 @@
   "main": "build/index.js",
   "scripts": {
     "test": "mocha",
-    "build": "npm test && parcel index.js -d build",
-    "pre-commit": "npm run build"
+    "build": "npm test && parcel build index.js -d build",
+    "prepublish": "npm run build"
   },
   "keywords": [
     "finance",
@@ -19,7 +19,8 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^6.0.2",
-    "parcel-bundler": "^1.11.0"
+    "parcel-bundler": "^1.11.0",
+    "pre-commit": "^1.2.2"
   },
   "repository": {
     "type": "git",
