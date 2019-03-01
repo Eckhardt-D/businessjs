@@ -3,7 +3,7 @@
 A new finance library for javascript. Intended to improve the workflow of JavaScript developers who are also in the finance industry.
 The package includes nice helper functions to quickly get values for ratio analysis, time value of money, managerial calculations etc.
 
-> Currently version 1.0.0 only has Time Value of Money
+> Currently version 1.x.x only has Time Value of Money
 
 ## To get started
 
@@ -11,7 +11,13 @@ The package includes nice helper functions to quickly get values for ratio analy
 npm install businessjs
 ```
 
-This will give you the package available for use in any front-end or Node.js environment. (CDN coming soon).
+## get CDN
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/businessjs@1.1.1/build/index.min.js"></script>
+```
+
+This will give you the package available for use in any front-end or Node.js environment.
 
 ## Guide
 
@@ -111,7 +117,9 @@ const perPeriod = 12;
 tvm.effectiveRate(nominalRate, perPeriod);
 ```
 
-## Browser support
+## Browser support from node_modules
+
+> Using the CDN is recommended though.
 
 ```html
 <!DOCTYPE html>
@@ -129,19 +137,6 @@ This should create the instance globally on the window
 <script>
   const tvm = businessjs.tvm;
 </script>
-```
-
-## To make changes or sumbit pull requests, just fork the repo:
-
-```
-https://github.com/Eckhardt-D/businessjs
-```
-
-You need to make sure that you test and build your changes
-
-```bash
-npm test
-npm run build
 ```
 
 These are just the first few methods in version 1, Documentation will be updated as version improves.
