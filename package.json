@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha",
     "build": "npm test && parcel index.js -d build",
-    "precommit": "npm run build"
+    "pre-commit": "npm run build"
   },
   "keywords": [
     "finance",
