@@ -5,7 +5,8 @@
   "main": "build/index.js",
   "scripts": {
     "test": "mocha",
-    "build": "parcel index.js -d build"
+    "build": "npm test && parcel index.js -d build",
+    "precommit": "npm run build"
   },
   "keywords": [
     "finance",
