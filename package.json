@@ -1,6 +1,6 @@
 {
   "name": "businessjs",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Fast and accurate business and financial calculations in JavaScript.",
   "main": "build/index.js",
   "scripts": {
