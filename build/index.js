@@ -5,4 +5,3 @@ var e=require("./tvm"),r={tvm:e};module.exports=r;
 },{"./tvm":"XDvz"}],"Focm":[function(require,module,exports) {
 var e=require("./src/main");module.exports=e,"undefined"!=typeof window&&(window.businessjs=e);
 },{"./src/main":"HJD/"}]},{},["Focm"], null)
-//# sourceMappingURL=/index.map

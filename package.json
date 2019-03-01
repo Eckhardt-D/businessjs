@@ -5,7 +5,7 @@
   "main": "build/index.js",
   "scripts": {
     "test": "mocha",
-    "build": "npm test && parcel build index.js -d build",
+    "build": "npm test && parcel build index.js --no-source-maps -d build",
     "prepublish": "npm run build"
   },
   "keywords": [
