@@ -11,16 +11,6 @@ The package includes nice helper functions to quickly get values for ratio analy
 npm install businessjs
 ```
 
-## To build
-
-> A test runner goes off to test the code before building
-
-```bash
-cd businessjs
-
-npm run build # outputs to build/index.js
-```
-
 This will give you the package available for use in any front-end or Node.js environment. (CDN coming soon).
 
 ## Guide
@@ -28,7 +18,8 @@ This will give you the package available for use in any front-end or Node.js env
 ### Time Value of money
 
 ```js
-const tvm = require('tvm');
+const businessjs = require('businessjs');
+const tvm = businessjs.tvm;
 
 // Get present values of ordinary annuities.
 const futureValue = 310.58;
@@ -132,4 +123,25 @@ tvm.effectiveRate(nominalRate, perPeriod);
 </html>
 ```
 
-These are just the first few methods in version 1.0.0, Documentation will be updated as version improves.
+This should create the instance globally on the window
+
+```html
+<script>
+  const tvm = businessjs.tvm;
+</script>
+```
+
+## To make changes or sumbit pull requests, just fork the repo:
+
+```
+https://github.com/Eckhardt-D/businessjs
+```
+
+You need to make sure that you test and build your changes
+
+```bash
+npm test
+npm run build
+```
+
+These are just the first few methods in version 1, Documentation will be updated as version improves.

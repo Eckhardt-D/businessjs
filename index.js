@@ -1,3 +1,7 @@
-const fin = require('./src/main');
+const businessjs = require('./src/main');
 
-module.exports = fin;
+module.exports = businessjs;
+
+if (typeof window !== 'undefined') {
+  window.businessjs = businessjs;
+}
