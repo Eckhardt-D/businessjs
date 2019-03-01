@@ -23,8 +23,18 @@ This will give you the package available for use in any front-end or Node.js env
 
 ### Time Value of money
 
+Import syntax:
+
+```js
+import businessjs from 'businessjs';
+```
+
+In node environment:
+
 ```js
 const businessjs = require('businessjs');
+
+// The rest is the same in any environment
 const tvm = businessjs.tvm;
 
 // Get present values of ordinary annuities.
