@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha",
     "build": "npm test && parcel build index.js --no-source-maps -d build",
-    "prepublish": "npm run build"
+    "prepare": "npm run build"
   },
   "keywords": [
     "finance",
