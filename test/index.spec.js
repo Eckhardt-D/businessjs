@@ -1,10 +1,11 @@
 const chai = require('chai');
 chai.should();
+const expect = chai.expect;
 
 const businessjs = require('../index');
 const tvm = businessjs.tvm;
 
-describe('Fin library unit tests', () => {
+describe('Businessjs library unit tests', () => {
   it('Should have all properties', done => {
     tvm.should.be.a('object');
 
@@ -17,7 +18,9 @@ describe('Fin library unit tests', () => {
       'presentValueAnnuityDue',
       'presentValueAnnuityAdvance',
       'futureValueAnnuityAdvance',
-      'effectiveRate'
+      'effectiveRate',
+      'amortisation',
+      'amortization'
     ];
 
     methods.forEach(method => {
@@ -105,10 +108,10 @@ describe('Fin library unit tests', () => {
 
   describe('presentValueAnnuityDue', () => {
     it('Should return the correct amount to two decimals', done => {
-      const fvad = tvm.presentValueAnnuityDue(100, 0.12, 3, 1);
+      const fvad = tvm.presentValueAnnuityDue(121, 0.12, 3, 1);
 
       fvad.should.exist;
-      fvad.should.be.approximately(269.01, 0.05);
+      fvad.should.be.approximately(325.50, 0.05);
       done();
     });
   });
@@ -128,6 +131,38 @@ describe('Fin library unit tests', () => {
       const eff = tvm.effectiveRate(0.06, 12);
 
       eff.should.be.approximately(0.061678, 0.0001);
+      done();
+    });
+  });
+
+  describe('amortisation length', () => {
+    it('Should return correct array length', done => {
+      let amort = tvm.amortisation(1000, 0.1, 3, 12);
+      amort.length.should.equal(12 * 3);
+      done();
+    });
+  });
+
+  describe('amortisation values', () => {
+    it('Should all be numbers', done => {
+      let amort = tvm.amortisation(1000, 0.1, 3, 12);
+      amort.forEach(obj => {
+        let keys = Object.keys(obj);
+        keys.forEach(key => {
+          expect(obj[key]).to.be.a('number');
+        });
+      });
+      done();
+    });
+  });
+
+  describe('amortisation amounts', () => {
+    it('Should all be correct to 2 decimals', done => {
+      const result = tvm.amortisation(100200, 0.1, 10, 12);
+      result[result.length - 1].totalBalance.should.equal(0);
+      result[0].payment.should.be.approximately(1324.15, 1);
+      result[0].interestPortion.should.be.approximately(835, 0.5);      
+      result[0].principlePortion.should.be.approximately(489, 0.5);
       done();
     });
   });

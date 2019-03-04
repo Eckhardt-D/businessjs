@@ -6,6 +6,7 @@
   "scripts": {
     "test": "mocha",
     "build": "npm test && parcel build index.js --no-source-maps -d build",
+    "dev": "parcel test.html --no-source-maps",
     "prepare": "npm run build"
   },
   "keywords": [

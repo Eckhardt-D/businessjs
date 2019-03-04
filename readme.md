@@ -33,98 +33,7 @@ In node environment:
 
 ```js
 const businessjs = require('businessjs');
-
-// The rest is the same in any environment
 const tvm = businessjs.tvm;
-
-// Get present values of ordinary annuities.
-const futureValue = 310.58;
-const interest = 0.12;
-const numPeriods = 10;
-// Not required if not compunding at different interval
-const perPeriod = 1;
-
-tvm.presentValue(futureValue, interest, numPeriods);
-
-// Get present values of ordinary annuities that compound monthly.
-const futureValue = 330;
-const interest = 0.12;
-const numPeriods = 10;
-const perPeriod = 12;
-
-tvm.presentValue(futureValue, interest, numPeriods);
-
-// Get future values of ordinary annuities.
-const presentValue = 100;
-const interest = 0.12;
-const numPeriods = 10;
-// Not required if not compunding at different interval
-const perPeriod = 1;
-
-tvm.futureValue(presentValue, interest, numPeriods);
-
-// Get future values of ordinary annuities.
-const presentValue = 100;
-const interest = 0.12;
-const numPeriods = 10;
-// Not required if not compunding at different interval
-const perPeriod = 1;
-
-tvm.futureValue(presentValue, interest, numPeriods);
-
-// Get period of formulae
-const presentValue = 100;
-const futureValue = 310.58;
-const interest = 0.12;
-const perPeriod = 1;
-
-tvm.numPeriods(presentValue, futureValue, interest, perPeriod);
-
-// Get interest value of formula in decimal.
-const presentValue = 10000;
-const futureValue = 142100000;
-const numPeriod = 39.5;
-const perPeriod = 1;
-
-tvm.interest(presentValue, futureValue, numPeriod, perPeriod);
-
-// Get future values of ordinary annuities due at end.
-const payment = 100;
-const interest = 0.12;
-const numPeriods = 3;
-const perPeriod = 1;
-
-tvm.futureValueAnnuityDue(payment, interest, numPeriods, perPeriod);
-
-// Get present values of ordinary annuities payable in advance.
-const payment = 100;
-const interest = 0.12;
-const numPeriods = 3;
-const perPeriod = 1;
-
-tvm.futureValueAnnuityAdvance(payment, interest, numPeriods, perPeriod);
-
-// Get present values of ordinary annuities due.
-const payment = 100;
-const interest = 0.12;
-const numPeriods = 3;
-const perPeriod = 1;
-
-tvm.presentValueAnnuityDue(payment, interest, numPeriods, perPeriod);
-
-// Get present values of ordinary annuities in advance.
-const payment = 100;
-const interest = 0.12;
-const numPeriods = 3;
-const perPeriod = 1;
-
-tvm.presentValueAnnuityAdvance(payment, interest, numPeriods, perPeriod);
-
-// Get effective yearly rate from a nominal rate.
-const nominalRate = 0.06;
-const perPeriod = 12;
-
-tvm.effectiveRate(nominalRate, perPeriod);
 ```
 
 ## Browser support from node_modules
@@ -148,5 +57,76 @@ This should create the instance globally on the window
   const tvm = businessjs.tvm;
 </script>
 ```
+
+# Time Value of Money
+
+Methods
+
+### `futureValue = function(presentValue, interest, [numPeriods = 1, perPeriod = 1])`
+  - Requires the present value and effective interest in decimal format and returns a future value based on a number of periods.
+  - `numPeriods` defaults to 1 as in 1 year.
+  - `perPeriod` The amount of times an interest rate is compunded defaults to 1.
+
+### `presentValue = function(futureValue, interest, [numPeriods = 1, perPeriod = 1])`
+  - Requires the present value and interest in decimal format and returns a future value.
+  - `numPeriods` defaults to 1 as in 1 year.
+  - `perPeriod` The amount of times an interest rate is compunded defaults to 1.
+
+### `numPeriods = function(presentValue, futureValue, interest, [perPeriod = 1])`
+  - Returns the number of periods that an investment / loan would take to realise, pay off. 
+  - `perPeriod` The amount of times an interest rate is compunded defaults to 1.
+
+### `interest = function(presentValue, futureValue, [numPeriods = 1, perPeriod = 1])`
+  - Returns the interest rate of a given investment/loan.
+  - `numPeriods` defaults to 1 as in 1 year.
+  - `perPeriod` The amount of times an interest rate is compunded defaults to 1.
+
+### `futureValueAnnuityDue = function(payment, interest, [numPeriods = 1, perPeriod = 1])`
+  - Returns the future value of an annuity paid at the end of every cycle with an effective interest rate.
+  - `numPeriods` defaults to 1 as in 1 year.
+  - `perPeriod` The amount of times an interest rate is compunded defaults to 1.
+
+### `futureValueAnnuityAdvance = function(payment, interest, [numPeriods = 1, perPeriod = 1])`
+  - Returns the future value of an annuity paid at the beginning of every cycle with an effective interest rate.  
+  - `numPeriods` defaults to 1 as in 1 year.
+  - `perPeriod` The amount of times an interest rate is compunded defaults to 1.
+  
+### `presentValueAnnuityDue = function(payment, interest, [numPeriods = 1, perPeriod = 1])`
+  - Returns the present value of an annuity paid at the end of every cycle with an effective interest rate.
+  - `numPeriods` defaults to 1 as in 1 year.
+  - `perPeriod` The amount of times an interest rate is compunded defaults to 1.
+
+### `presentValueAnnuityAdvance = function(payment, interest, [numPeriods = 1, perPeriod = 1])`
+  - Returns the present value of an annuity paid at the beginning of every cycle with an effective interest rate.
+  - `numPeriods` defaults to 1 as in 1 year.
+  - `perPeriod` The amount of times an interest rate is compunded defaults to 1.
+
+### `effectiveRate = function(nominalRate, perPeriod)`
+  - Returns the annual effective interest rate from a nominal rate and per-period compund amount.
+  - Useful because all other functions use effective rate, eg.
+
+  ```js
+  const tvm = require('businessjs').tvm;
+
+  // Convert the monthly nominal rate to yearly effective inline
+  tvm.futureValue(100, tvm.effectiveRate(0.1, 12), 1, 1);
+  ```
+
+### `amortisation = function(presentValue, interest, [numPeriods=1, perPeriod=12])`
+  - Returns an array of objects that have the following shape:
+  ```js
+  {
+    period,
+    payment,
+    interestPortion,
+    principlePortion,
+    totalBalance,
+    principleBalance
+  }
+  ```
+  - Returns the tabular data of an amortisation with breakdown of interest and principle amounts.
+  - `numPeriods` defaults to 1 as in 1 year.
+  - `perPeriod` The amount of times an interest rate is compunded defaults to 12 payments per year.
+
 
 These are just the first few methods in version 1, Documentation will be updated as version improves.

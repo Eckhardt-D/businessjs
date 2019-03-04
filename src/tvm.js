@@ -74,9 +74,9 @@ TVM.prototype.futureValueAnnuityAdvance = function(payment, interest, numPeriods
  */
 TVM.prototype.presentValueAnnuityDue = function(payment, interest, numPeriods = 1, perPeriod = 1) {
   let newInterest = interest / perPeriod;
-  let discount = 1 / Math.pow(1 + newInterest, 2);
-  let ratio = (1 - discount) / newInterest + 1;
-  return 100 * ratio;
+  let discount = 1 / Math.pow(1 + newInterest, (numPeriods * perPeriod) - 1);
+  let ratio = (1 - discount) / newInterest + 1; 
+  return payment * ratio;
 };
 
 /**
@@ -98,6 +98,36 @@ TVM.prototype.presentValueAnnuityAdvance = function(payment, interest, numPeriod
 TVM.prototype.effectiveRate = function(nominalRate, perPeriod) {
   return Math.pow(1 + nominalRate / perPeriod, perPeriod) - 1;
 };
+
+/**
+ * A function that returns an array of amortisation schedules
+ * @param {Number} presentValue The present value of the loan amount
+ * @param {Number} interest The annual effective interest rate
+ * @param {Number} [numPeriods=1] The number of years
+ * @param {Number} [perPeriod=12] The number of payments per period
+ * @returns {Array} Amortization data
+ */
+TVM.prototype.amortisation = function(presentValue, interest, numPeriods=1, perPeriod=12) {
+  let totalPayments = numPeriods * perPeriod;
+  let newInt = interest / perPeriod;
+  let rateCalc = Math.pow(1 + newInt, totalPayments);
+  let payment = round(presentValue * ((newInt * rateCalc) / (rateCalc - 1)), 2);
+  let principleBalance = presentValue;
+
+  let amortData = [];
+
+  for(let i = 0; i < totalPayments; i++) {
+    let totalBalance = round((totalPayments * payment) - ((i + 1) * payment), 2);
+    let interestPortion = round(newInt * principleBalance, 2);
+    let principlePortion = round(payment - interestPortion, 2);
+    principleBalance -= principlePortion;
+
+    amortData.push({period: i + 1, payment, interestPortion, principlePortion, totalBalance, principleBalance: round(principleBalance, 2)});
+  }
+  return amortData;
+}
+
+TVM.prototype.amortization = TVM.prototype.amortisation;
 
 function round(number, decimals) {
   let amount = Math.pow(10, decimals);
